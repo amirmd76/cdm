@@ -1,0 +1,2 @@
+#!/usr/bin/python
+allowed_types = ['3GP', '7Z', 'AAC', 'ACE', 'AIF', 'ARJ', 'ASF', 'AVI', 'BIN', 'BZ2', 'EXE', 'DEB', 'DMG', 'GZ', 'GZIP', 'ISO', 'LZH', 'M4A', 'M4V', 'MOV', 'MP3', 'MPA', 'MPE', 'MPEG', 'MPG', 'MSI', 'MSU', 'OGG', 'PDF', 'PLJ', 'PPS', 'PPT', 'QT', 'RA', 'RAR', 'RM', 'RPM', 'SEA', 'SIT', 'SITX', 'TAR', 'TIF', 'TIFF', 'WAV', 'WMA', 'WMV', 'Z', 'ZIP', 'JAR', 'TLZ', 'TBZ2', 'TXZ', 'XZ', 'CBZ', 'PKG', 'RUN', 'MKV', 'MP4']
