@@ -87,7 +87,7 @@ def start(args, db):
         status = subprocess.call(["axel", "-an", "10", queue[0], '-o', os.path.join(folder, file_name)])
         if status is not 0:
             db['urls'][url]['state'] = 'w'
-            db['urls'][url].setdefalt('tries', 0)
+            db['urls'][url].setdefault('tries', 0)
             db['urls'][url]['tries'] += 1
             if db['urls'][url]['tries'] > 30 and not args.ndrop:
                 pop_queue(db)
