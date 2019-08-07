@@ -9,7 +9,6 @@ import time
 from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db
 from cdm.queue import add
 
-
 parser = argparse.ArgumentParser(prog="cdm", description='Charzeh Download manager')
 subparsers = parser.add_subparsers(help='sub-command help', dest="command")
 subparsers.required = True
@@ -34,6 +33,8 @@ args = parser.parse_args()
 
 
 def start(args, db):
+    print("Starting ...")
+
     folder = '.'
     if args.output:
         folder = args.output
@@ -44,7 +45,6 @@ def start(args, db):
         except:
             print("Can't make directory {}".format(folder))
             return 1
-
     tries = 0
     while True:
         queue = read_queue(db)
@@ -67,17 +67,20 @@ def start(args, db):
         file_name = name
         while fnd:
             file_name = file_name_index(name, idx)
-            if os.path.exists(file_name):
+            fnd = os.path.exists(file_name)
+            if fnd:
                 if args.ndf:
                     print("Duplicate file {}, ignoring".format(file_name))
                     pop_queue(db)
-                    fnd = False
                     should_continue = True
                     break
                 idx += 1
+
         if should_continue:
             continue
+
         db['urls'][url]['state'] = 'r'
+        print('Starting to download {}'.format(file_name))
         status = subprocess.call(["axel", "-an", "10", queue[0], '-o', os.path.join(folder, file_name)])
         if status is not 0:
             db['urls'][url]['state'] = 'w'
