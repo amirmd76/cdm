@@ -2,7 +2,10 @@ import json
 import os
 from subprocess import call
 
-from urlparse import urlparse
+try:
+    from urlparse import urlparse
+except ModuleNotFoundError:
+    from urllib.parse import urlparse
 
 from ftypes import allowed_types
 
@@ -112,6 +115,3 @@ def get_file_name(url):
     name = name.replace('_', '-')
     return file_name_index(name, 0)
 
-
-def keep_running():
-    return True
