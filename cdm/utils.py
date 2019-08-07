@@ -37,7 +37,7 @@ def validate_url(url):
 
 
 def read_queue(db):
-    db.setdefault(db, 'queue', [])
+    db.setdefault('queue', [])
     return db['queue']
 
 
