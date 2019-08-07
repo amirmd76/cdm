@@ -85,7 +85,7 @@ def pop_queue(db):
     write_queue(db, queue)
 
 
-def parse_urls(db, text):
+def parse_urls(db, text, all):
     inv = "\'\""
     l = text.split()
     for c in inv:
@@ -95,7 +95,7 @@ def parse_urls(db, text):
         l = cpy
     l = remove_empty(l)
     for s in l:
-        if validate_url(s, args.all):
+        if validate_url(s, all):
             add_to_queue(db, s)
 
 

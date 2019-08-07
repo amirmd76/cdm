@@ -11,7 +11,7 @@ def add(args, db):
         file = open(args.file, 'r+')
         content = file.read()
         file.close()
-        parse_urls(db, content)
+        parse_urls(db, content, args.all)
     else:
         if not args.url:
             print('no url specified')
