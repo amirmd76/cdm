@@ -17,7 +17,7 @@ def add(args, db):
             print('no url specified')
             return 1
         url = args.url
-        if not validate_url(url):
+        if not validate_url(url, args.all):
             print('invalid url')
             return 1
         add_to_queue(db, url)

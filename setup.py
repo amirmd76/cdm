@@ -4,7 +4,7 @@ readme = "Charzeh Download Manager"
 
 setup(
     name='cdm',
-    version='0.0.6',
+    version='0.0.7',
     description='Charzeh Download Manager',
     long_description=readme,
     author='AmirMohammad Dehghan',

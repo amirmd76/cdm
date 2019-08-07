@@ -30,10 +30,12 @@ def get_extention(x):
     return lis[-1].upper()
 
 
-def validate_url(url):
+def validate_url(url, all=False):
     if not urlparse(url).hostname:
         return False
-    return get_extention(urlparse(url).path) in allowed_types
+    if not all:
+        return get_extention(urlparse(url).path) in allowed_types
+    return True
 
 
 def read_queue(db):
@@ -93,7 +95,7 @@ def parse_urls(db, text):
         l = cpy
     l = remove_empty(l)
     for s in l:
-        if validate_url(s):
+        if validate_url(s, args.all):
             add_to_queue(db, s)
 
 
