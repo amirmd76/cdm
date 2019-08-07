@@ -6,8 +6,8 @@ import sys
 import subprocess
 import time
 
-from utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db
-from queue import add
+from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db
+from cdm.queue import add
 
 
 parser = argparse.ArgumentParser(prog="cdm", description='Charzeh Download manager')

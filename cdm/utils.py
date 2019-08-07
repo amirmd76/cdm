@@ -7,7 +7,7 @@ try:
 except ModuleNotFoundError:
     from urllib.parse import urlparse
 
-from ftypes import allowed_types
+from cdm.ftypes import allowed_types
 
 
 def get_db_path():

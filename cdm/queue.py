@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from utils import parse_urls, validate_url, add_to_queue
+from cdm.utils import parse_urls, validate_url, add_to_queue
 
 
 def add(args, db):
