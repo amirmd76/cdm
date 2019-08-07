@@ -37,7 +37,7 @@ def validate_url(url):
 
 
 def read_queue(db):
-    db.setdefaul(db, 'queue', [])
+    db.setdefault(db, 'queue', [])
     return db['queue']
 
 
@@ -47,7 +47,6 @@ def read_db():
     with open(get_db_path(), 'r') as file:
         db = json.load(file)
     return db
-
 
 def write_db(db):
     with open(get_db_path(), 'w') as file:
