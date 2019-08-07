@@ -12,7 +12,5 @@ setup(
     url='https://github.com/amirmd76/cdm.git',
     license='MIT',
     packages=find_packages(),
-    install_requires=[
-          'urlparse'
-      ]
+    install_requires=[]
 )
