@@ -26,8 +26,8 @@ parser_start.add_argument('-p', '--no_drops', help='don\'t drop failed downloads
 
 
 parser_add = subparsers.add_parser('add', help='add to queue')
-parser_start.add_argument('-f', '--file', type=str, help='file path to get links from', dest='file')
-parser_start.add_argument('-u', '--url', type=str, help='url', dest='url')
+parser_add.add_argument('-f', '--file', type=str, help='file path to get links from', dest='file')
+parser_add.add_argument('-u', '--url', type=str, help='url', dest='url')
 
 
 args = parser.parse_args()
