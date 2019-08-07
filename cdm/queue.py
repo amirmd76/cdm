@@ -21,3 +21,4 @@ def add(args, db):
             print('invalid url')
             return 1
         add_to_queue(db, url)
+    return 0

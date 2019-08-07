@@ -6,7 +6,7 @@ import sys
 import subprocess
 import time
 
-from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db
+from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db, write_queue
 from cdm.queue import add
 
 parser = argparse.ArgumentParser(prog="cdm", description='Charzeh Download manager')
@@ -26,9 +26,11 @@ parser_start.add_argument('-p', '--no_drops', help='don\'t drop failed downloads
 
 parser_add = subparsers.add_parser('add', help='add to queue')
 parser_add.add_argument('-f', '--file', type=str, help='file path to get links from', dest='file')
-parser_add.add_argument('-a', '--all', type=str, help='add all links', dest='all')
+parser_add.add_argument('-a', '--all', help='add all links', action='store_true', dest='all')
 parser_add.add_argument('-u', '--url', type=str, help='url', dest='url')
 
+
+parser_add = subparsers.add_parser('clear', help='clear queue')
 
 args = parser.parse_args()
 
@@ -54,7 +56,7 @@ def start(args, db):
                 time.sleep(5)
                 continue
             print("Nothing to do!")
-            sys.exit(0)
+            return 0
         url = queue[0]
         db.setdefault('urls', {}).setdefault(url, {'state': 'p'})
         if db['urls'][url]['state'] == 'f' and not args.ndu:
@@ -100,14 +102,22 @@ def start(args, db):
             db['urls'][url]['state'] = 'f'
             print("Downloaded {} :)!".format(queue[0]))
             pop_queue(db)
+    return 0
 
 
 def main():
-    db = read_db()
-    if args.command == 'start':
-        start(args, db)
-    elif args.command == 'add':
-        add(args, db)
+    try:
+        status = 0
+        db = read_db()
+        if args.command == 'start':
+            status = start(args, db)
+        elif args.command == 'add':
+            status = add(args, db)
+        elif args.command == 'clear':
+            write_queue(db, [])
+    except KeyboardInterrupt:
+        print("Exited")
+        sys.exit(3)
 
 
 main()
