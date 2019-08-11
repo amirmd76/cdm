@@ -50,6 +50,7 @@ def start(args, db):
             return 1
     tries = 0
     while True:
+        db = read_db()
         queue = read_queue(db)
         if not queue:
             if args.watch:
