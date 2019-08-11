@@ -11,7 +11,10 @@ from cdm.ftypes import allowed_types
 
 
 def get_db_path():
-    dir = os.path.expanduser('~/.cdm')
+    if os.getenv("CDM_PATH", None):
+        dir = os.getenv("CDM_PATH")
+    else:
+        dir = os.path.expanduser('~/.cdm')
     if not os.path.exists(dir):
         call(['mkdir', '-p', dir])
     return os.path.join(dir, 'db')
