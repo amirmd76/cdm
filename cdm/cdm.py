@@ -53,15 +53,15 @@ def start(args, db):
         db = read_db()
         queue = read_queue(db)
         if not queue:
+            print("Nothing to do!")
             if args.watch:
                 time.sleep(5)
                 continue
-            print("Nothing to do!")
             return 0
         url = queue[0]
         db.setdefault('urls', {}).setdefault(url, {'state': 'p'})
         if db['urls'][url]['state'] == 'f' and not args.ndu:
-            pop_queue(db)
+            pop_queue()
             continue
 
         fnd = True
@@ -75,7 +75,7 @@ def start(args, db):
             if fnd:
                 if args.ndf:
                     print("Duplicate file {}, ignoring".format(file_name))
-                    pop_queue(db)
+                    pop_queue()
                     should_continue = True
                     break
                 idx += 1
@@ -93,18 +93,18 @@ def start(args, db):
             db['urls'][url].setdefault('tries', 0)
             db['urls'][url]['tries'] += 1
             if db['urls'][url]['tries'] > 30 and not args.ndrop:
-                pop_queue(db)
+                pop_queue()
                 continue
             print("Failed to download {} :(".format(queue[0]))
             tries += 1
             time.sleep(3)
             if tries > 10:
                 tries = 0
-                shift_queue(db)
+                shift_queue()
         else:
             db['urls'][url]['state'] = 'f'
             print("Downloaded {} :)!".format(queue[0]))
-            pop_queue(db)
+            pop_queue()
     return 0
 
 

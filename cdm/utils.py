@@ -63,16 +63,18 @@ def write_queue(db, queue):
     write_db(db)
 
 
-def add_to_queue(db, url):
+def add_to_queue(url):
     print(url + " added to queue")
+    db = read_db()
     queue = read_queue(db)
     if url not in queue:
         queue.append(url)
     write_queue(db, queue)
 
 
-def shift_queue(db):
+def shift_queue():
     print("queue shifted")
+    db = read_db()
     queue = read_queue(db)
     if len(queue) > 0:
         element = queue.pop(0)
@@ -80,8 +82,9 @@ def shift_queue(db):
     write_queue(db, queue)
 
 
-def pop_queue(db):
+def pop_queue():
     print("queue popped")
+    db = read_db()
     queue = read_queue(db)
     if len(queue) > 0:
         queue.pop(0)
@@ -99,7 +102,7 @@ def parse_urls(db, text, all):
     l = remove_empty(l)
     for s in l:
         if validate_url(s, all):
-            add_to_queue(db, s)
+            add_to_queue(s)
 
 
 def file_name_index(name, idx):

@@ -20,5 +20,5 @@ def add(args, db):
         if not validate_url(url, args.all):
             print('invalid url')
             return 1
-        add_to_queue(db, url)
+        add_to_queue(url)
     return 0
