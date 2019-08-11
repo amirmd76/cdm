@@ -84,7 +84,8 @@ def start(args, db):
 
         db['urls'][url]['state'] = 'r'
         print('Starting to download {}'.format(file_name))
-        status = subprocess.call(["axel", "-an", "10", queue[0], '--max-redirect=1000', '-o', os.path.join(folder, file_name)])
+        status = subprocess.call(f"axel -an 10 {queue[0]} --max-redirect=1000 -o {os.path.join(folder, file_name)}",
+                                 shell=True)
         if status is not 0:
             db['urls'][url]['state'] = 'w'
             db['urls'][url].setdefault('tries', 0)
