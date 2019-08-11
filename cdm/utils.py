@@ -4,7 +4,7 @@ from subprocess import call
 
 try:
     from urlparse import urlparse
-except ModuleNotFoundError:
+except ImportError:
     from urllib.parse import urlparse
 
 from cdm.ftypes import allowed_types
