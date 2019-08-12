@@ -28,7 +28,7 @@ parser_add = subparsers.add_parser('add', help='add to queue')
 parser_add.add_argument('-f', '--file', type=str, help='file path to get links from', dest='file')
 parser_add.add_argument('-a', '--all', help='add all links', action='store_true', dest='all')
 parser_add.add_argument('-u', '--url', type=str, help='url', dest='url')
-
+parser_add.add_argument('-n', '--name', type=str, help='file name', dest='name')
 
 parser_add = subparsers.add_parser('clear', help='clear queue')
 
@@ -59,6 +59,10 @@ def start(args, db):
                 continue
             return 0
         url = queue[0]
+        name = None
+        if isinstance(url, dict):
+            name = url.get('name')
+            url = url['url']
         db.setdefault('urls', {}).setdefault(url, {'state': 'p'})
         if db['urls'][url]['state'] == 'f' and not args.ndu:
             pop_queue()
@@ -85,8 +89,11 @@ def start(args, db):
 
         db['urls'][url]['state'] = 'r'
         print('Starting to download {}'.format(file_name))
-        status = subprocess.call("axel -an 10 {} --max-redirect=1000 -o {}".format(queue[0],
-                                                                                   os.path.join(folder, file_name)),
+        path = os.path.join(folder, file_name)
+        if os.path.isdir(path) and name:
+            path = os.path.join(path, name)
+        status = subprocess.call("axel -an 10 \"{}\" --max-redirect=1000 -o \"{}\"".
+                                 format(url, path),
                                  shell=True)
         if status is not 0:
             db['urls'][url]['state'] = 'w'
