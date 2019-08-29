@@ -71,7 +71,8 @@ def start(args, db):
         fnd = True
         should_continue = False
         idx = 0
-        name = get_file_name(url)
+        if not name:
+            name = get_file_name(url)
         file_name = name
         while fnd:
             file_name = file_name_index(name, idx)
