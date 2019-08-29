@@ -64,7 +64,7 @@ def write_queue(db, queue):
 
 
 def add_to_queue(url):
-    print(url + " added to queue")
+    print((url if isinstance(url, str) else url['url']) + " added to queue")
     db = read_db()
     queue = read_queue(db)
     if url not in queue:
