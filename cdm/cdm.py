@@ -1,12 +1,14 @@
 #!/usr/bin/python
 import argparse
+import json
 import os
 import sys
 
 import subprocess
 import time
 
-from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db, write_queue
+from cdm.utils import read_queue, shift_queue, pop_queue, get_file_name, file_name_index, read_db, write_queue, \
+    add_to_queue
 from cdm.queue import add
 
 parser = argparse.ArgumentParser(prog="cdm", description='Charzeh Download manager')
@@ -31,6 +33,9 @@ parser_add.add_argument('-u', '--url', type=str, help='url', dest='url')
 parser_add.add_argument('-n', '--name', type=str, help='file name', dest='name')
 
 parser_add = subparsers.add_parser('clear', help='clear queue')
+
+parser_export_queue = subparsers.add_parser('exportQ', help='Export queue')
+parser_import_queue = subparsers.add_parser('importQ', help='Import queue')
 
 args = parser.parse_args()
 
@@ -126,6 +131,22 @@ def main():
             status = add(args, db)
         elif args.command == 'clear':
             write_queue(db, [])
+        elif args.command == 'exportQ':
+            for entry in read_queue(db):
+                if isinstance(entry, str):
+                    print(entry)
+                else:
+                    print(json.dumps(entry))
+        elif args.command == 'importQ':
+            for line in sys.stdin:
+                l = line.strip()
+                obj = l
+                try:
+                    obj = json.loads(l)
+                except:
+                    pass
+                add_to_queue(obj)
+
     except KeyboardInterrupt:
         print("Exited")
         sys.exit(3)
